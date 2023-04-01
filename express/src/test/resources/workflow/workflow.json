@@ -1,0 +1,42 @@
+[
+    {
+        "id": "01",
+        "type": "endpoint",
+        "direction": "in",
+        "app": "AppCharger",
+        "endpoint": "ReceiveChargeOrder",
+        "connection": "LuyaoChargerConn"
+    },
+    {
+        "id": "02",
+        "type": "processor",
+        "subtype": "javascript",
+        "script": "I1001",
+        "from": "01"
+    },
+    {
+        "id": "03",
+        "desc": "发送停车券",
+        "type": "endpoint",
+        "direction": "out",
+        "app": "AppParking",
+        "endpoint": "SendParkingCoupon",
+        "connection": "LuyaoParkingConn",
+        "from": "02",
+        "config": {"callLimitPerSecond": 100}
+    },
+    {
+        "id": "04",
+        "type": "processor",
+        "subtype": "javascript",
+        "script": "I1001",
+        "from": ["01", "02", "03"]
+    },
+    {
+        "id": "exception",
+        "type": "processor",
+        "subtype": "java",
+        "module": "Simple",
+        "class": "cloud.phusion.test.util.SimpleProcessor"
+    }
+]

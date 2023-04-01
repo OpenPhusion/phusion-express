@@ -1,0 +1,16 @@
+[
+    {
+        "id": "01",
+        "type": "endpoint",
+        "direction": "in",
+        "app": "AppSimple",
+        "endpoint": "receiveChargeOrder",
+        "connection": "LuyaoChargerConn"
+    },
+    {
+        "id": "02",
+        "from": "01",
+        "type": "direct",
+        "msg": {"status":"DONE!"}
+    }
+]

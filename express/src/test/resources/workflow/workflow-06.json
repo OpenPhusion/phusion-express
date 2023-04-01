@@ -1,0 +1,17 @@
+[
+    {
+        "id": "01",
+        "type": "processor",
+        "subtype": "javascript",
+        "async": true,
+        "script": "I1003"
+    },
+    {
+        "id": "02",
+        "type": "processor",
+        "subtype": "javascript",
+        "script": "I1003",
+        "async": true,
+        "from": "01"
+    }
+]

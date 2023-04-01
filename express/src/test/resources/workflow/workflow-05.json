@@ -1,0 +1,31 @@
+[
+    {
+        "id": "01",
+        "type": "direct",
+        "msg": [{"text": "person-1"},{"text": "person-2"}]
+    },
+    {
+        "id": "02",
+        "type": "forEach",
+        "from": "01"
+    },
+    {
+        "id": "03",
+        "type": "processor",
+        "subtype": "javascript",
+        "script": "I1002",
+        "from": "02"
+    },
+    {
+        "id": "04",
+        "type": "collect",
+        "from": "03"
+    },
+    {
+        "id": "05",
+        "type": "processor",
+        "subtype": "javascript",
+        "script": "I1002",
+        "from": "04"
+    }
+]

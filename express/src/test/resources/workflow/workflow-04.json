@@ -1,0 +1,28 @@
+[
+    {
+        "id": "01",
+        "type": "direct",
+        "msg": {"text": "hello"}
+    },
+    {
+        "id": "02",
+        "type": "processor",
+        "subtype": "javascript",
+        "script": "I1001",
+        "from": "01"
+    },
+    {
+        "id": "03",
+        "type": "processor",
+        "subtype": "java",
+        "module": "Simple",
+        "class": "cloud.phusion.test.util.SimpleProcessor",
+        "from": "02"
+    },
+    {
+        "id": "exception",
+        "type": "processor",
+        "subtype": "javascript",
+        "script": "I1001"
+    }
+]

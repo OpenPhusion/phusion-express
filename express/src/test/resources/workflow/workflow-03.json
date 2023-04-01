@@ -1,0 +1,21 @@
+[
+    {
+        "id": "01",
+        "type": "direct",
+        "msg": {"name": null}
+    },
+    {
+        "id": "02",
+        "type": "endpoint",
+        "direction": "out",
+        "app": "AppSimple",
+        "endpoint": "queryOrders",
+        "connection": "LuyaoChargerConn",
+        "from": "01"
+    },
+    {
+        "id": "exception",
+        "type": "direct",
+        "msg": {"status": "FAILED"}
+    }
+]
