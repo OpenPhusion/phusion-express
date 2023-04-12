@@ -4,7 +4,7 @@
 
 <br/>
 
-Phusion Integration, referred to as **Phusion** (pronounced as "fusion"), **is an open source programming framework and runtime engine for building enterprise integration applications**.
+Phusion Integration, abbreviated as **Phusion** (pronounced as "fusion"), **is an open source programming framework and runtime engine for building enterprise integration applications**.
 
 For example, with Phusion, you can integrate your company website with your CRM system, EMail system, Reporting system, and so on. When a visitor leaves a product inquiry message on your website, Phusion automatically sends her/him a greeting email in response, and creates a new lead in your CRM system, and informs the regional sales of this new business opportunity.
 
@@ -12,19 +12,17 @@ For example, with Phusion, you can integrate your company website with your CRM 
 
 Existing open source integration frameworks, such as Apache Camel and Spring Integration, are excellent and widely used. But compared with them, Phusion focuses on enhancing the following capabilities:
 
-**1. Decouple the work of encapsulating APIs from composing integration workflow**. APIs should be encapsulated by developers who are familiar with the protocol, terminology and functionality of the APIs. And integration workflows should be composed by developers who are in direct contact with the customers, familiar with their jargons and understand what they want. These two groups of developers may have different skill sets and even belong to different organizations. Therefore, their code should be separated, and their artifacts should also be deployed independently. This is exactly what Phusion does and what other frameworks pay less attention to. Yes, Camel has components, but they are mostly technical components. When you integrate a system, you have to do most of the API wrapping manually, even with the help of Camel components.
+**1. Decouple the work of encapsulating APIs from composing integration workflow**. APIs should be encapsulated by developers who are familiar with the protocol, terminology and functionality of the APIs. And integration workflows should be composed by developers who are in direct contact with the customers, familiar with their jargons and understand what they want. These two groups of developers may have different skill sets and even belong to different organizations. Therefore, their code should be separated, and their artifacts should also be deployed independently. This is exactly what Phusion does and what other frameworks pay less attention to.
 
-**2. Standardized integration schemes**. Based on real-world scenarios, define and utilize standard messages to simplify integration. Take the previous example of collecting visitor messages into CRM systems, if the message format is standardized, and the corresponding APIs are encapsulated according to the standard, then the same integration application can work with different web form tools and CRM systems. This reduces the integration complexity from o(n^2) right to o(n).
+**2. Standardized integration schemes**. Based on real-world scenarios, define and utilize standard messages to simplify integration. Take the previous example of collecting visitor messages into CRM systems, if the message format is standardized, and the corresponding APIs are encapsulated according to the standard, then the same integration application can work with different web form tools and CRM systems. This reduces the integration complexity from o(n^2) to o(n).
 
 **3. Provide common facilities for application development**, such as web port, scheduler, database, memory storage, file system, clustering, etc., so that the developers do not need to take care of these environment settings.
 
-**4. Provide runtime engine to execute the integration applications and RESTful APIs to manage them**. For example, dynamically load and start applications, configure integration workflows in real time, query and analyze transaction data, monitor cluster status, and more.
+**4. Provide runtime engine to execute the integration applications and Web console to manage them**. For example, dynamically load and start applications, configure integration workflows in real time, query and analyze transaction data, monitor cluster status, and more.
 
 <br/>
 
-As for iPaaS services like IFTTT, Zapier, Microsoft Flow, they are great for non-technical users and office automation scenarios, but not for serious software development. They are not flexible enough to allow programmers to build their own enterprise-grade integration applications.
-
-Your life will be easier to programming with Phusion, but Phusion doesn't take away the power of programming. Unlike low-code platforms, although Phusion has lowered the workload of API encapsulation, environment setup, resource configuration and deployment, allowing you to focus on business requirements and logic, Phusion has not lowered the code itself. Happy coding!
+As for iPaaS services like IFTTT, Zapier, Microsoft Flow, they are great for non-technical users and office automation scenarios, but not for serious software development. Mostly, they are not flexible enough to allow programmers to build their own enterprise-grade integration applications.
 
 <br/>
 
@@ -38,7 +36,7 @@ Your life will be easier to programming with Phusion, but Phusion doesn't take a
 
 https://www.markdownguide.org/basic-syntax
 
-Express is a lightweight verson of Phusion Engine that implements the Phusion API. It is compact, but clustered and battle-tested in real world use cases. The Express Engine also comes with a web service to use and manage the engine.
+Express is a lightweight version of Phusion Engine that implements the Phusion API. It is compact, but clustered and battle-tested in real world use cases. The Express Engine also comes with a web service to use and manage the engine.
 
 目前的 iPaaS，要么是面向非技术人员的零代码，要么是面向技术人员的一整套框架。非技术人员搞不定，技术人员用起来效率也很低。
 我们主要是面向技术人员，但会最大限度降低技术人员的学习成本。
