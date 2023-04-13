@@ -22,45 +22,45 @@ As for iPaaS services like IFTTT, Zapier, Microsoft Flow, they are great for non
 
 ## Application
 
-In Phusion, the term **application** has a specific meaning. It is a component that wraps an external system's API as one or more **endpoints** for Phusion to integrate. Each endpoint carries a specific function. From the perspective of the caller, an endpoint can be:
-- **Inbound**: the caller is calling from outside to the Phusion application. The application acts as the server, providing the calling address. For an inbound endpoint, it emits a **output** message to the Phusion engine, and receives an **input** message as the response.
-- **Outbound**: the caller (mostly a step in an integration workflow) is inside the Phusion system, and the application delegates the caller to access an outside service. For an outbound endpoint, it receives an **input** message from the Phusion engine, and emits an **output** message as the response.
+In Phusion, the term **application** has a specific meaning. It is a component that wraps an external system's API into one or more endpoints for Phusion to integrate with. Each endpoint performs a specific function. From the caller's perspective, an endpoint can be:
+- **Inbound endpoint**: the caller invokes the endpoint from the outside. The Phusion application acts as the server, providing the service address. For an inbound endpoint, it sends an **output** message to the Phusion engine, and receives an **input** message in response.
+- **Outbound endpoint**: the endpoint is called from the inside, mostly by a step in the integration workflow. The application accesses external services on behalf of the caller. For an outbound endpoint, it receives an **input** message from the Phusion engine, and replies with an **output** message.
 
-An application can be used by multiple clients, each client has its own credentials and settings to access the application. The collection of credentials and settings belonging to the client is called the client's **connection** to the application. Applications are responsible for maintaining the connections on behalf of the clients, in order to fluently use the application endpoints in integrations.
+An application can be used by multiple clients, each with their own credentials and settings to access the application. The collection of credentials and settings belonging to the client is called the client's **connection** to the application. It is the application's responsibility to maintain the connection on behalf of the client so that the application endpoints can be used fluently in the client's integrations.
 
 The lifecycle of an application:
-- None: the application is not registered to the engine, that is, it is unknown to the engine. This status is also referred to as "Unused".
-- Stopped: the application is registered, but is not executing.
-- Running: the application is registered, and is executing periodically or ready to service the incoming messages.
+- None: the application has not been registered to the engine, that is, it is unknown to the engine. This state is also known as "Unused".
+- Stopped: the application is registered, but is not running.
+- Running: the application is registered, and is running periodically or is ready to serve the incoming messages.
 
 <br/>
 
 ## Integration
 
-An **integration** connects application endpoints with workflow steps to perform certain functions on behalf of the client. The steps can be:
-- Endpoint: call an outbound application endpoint.
-- Java: execute a Java processor.
-- JavaScript: execute a JavaScript processor.
+An **integration** connects application endpoints through workflow steps to perform certain function. The step can be:
+- Endpoint: calls an outbound application endpoint.
+- Java: executes a Java processor.
+- JavaScript: executes a JavaScript processor.
 - Direct: emit some message to the following step.
-- ForEach: iterate over a list of items (JSON Array), for each item, execute a block of sub-workflow.
-- Collect: collect the results of the previous sub-workflow steps into a single message (JSON Array).
+- ForEach: iterate over the list of items in the message (JSON Array), and for each item, execute a sub-workflow.
+- Collect: collect the results of previous sub-workflows into a single message (JSON Array).
 
-An integration can be trigger to execution by:
-- Endpoint: an inbound application endpoint is called by outside systems.
-- Timer: schedule to execute the integration.
+The execution of integration can be triggered by:
+- An endpoint: an inbound application endpoint is called by outside systems. Or,
+- A timer: scheduled to execute the integration periodically.
 
-When an integration is executed, a data structure **transaction** is created to convey the message, properties, and context of the instance of the integration. The transaction is passed to each step, and each step can modify the transaction data (message and properties).
+When an integration instance is executed, a data structure called **transaction** is created to convey the incoming message, properties, and context of the integration instance. The transaction is passed to each step in the integration workflow, and each step can modify its data, namely messages and properties.
 
 An integration has similar lifecycle as applications:
-- None: the integration is not registered to the engine, that is, it is unknown to the engine. This status is also referred to as "Unused".
-- Stopped: the integration is registered, but is not executing.
-- Running: the integration is registered, and is executing periodically or ready to service.
+- None: the integration has not been registered to the engine, that is, it is unknown to the engine. This state is also known as "Unused".
+- Stopped: the integration is registered, but is not running.
+- Running: the integration is registered, and is running periodically or is ready to serve.
 
 <br/>
 
 ## Client
 
-A **client** is an organization who wants to implement and execute integration applications. A client usually owns some connections to certain applications, and some integrations.
+A **client** is an organization who wants to implement and execute integration applications. A client usually owns multiple connections to several applications, and runs integrations to use those applications.
 
 <br/>
 
@@ -100,12 +100,10 @@ https://www.markdownguide.org/basic-syntax
 ● 私有文件：不可被外网访问到。
 ● 公开文件（Public file）：可以通过网址访问到。
 
-
 不同的引擎，相同的组件 Embeddable
 开发引擎：用于开发组件的 Mock 环境
 单体引擎：一个引擎是一个进程，加载并运行各个组件，启动多进程进行容错
 集群引擎：各组件有独立的进程，独立开发和运行，整体采用事件驱动的无服务器架构；各引擎组成集群，各应用、流程可运行在独立的主机进程中
-
 
 ### Phusion Express Engine
 Express is a lightweight version of Phusion Engine that implements the Phusion API. It is compact, but clustered and battle-tested in real world use cases. The Express Engine also comes with a web service to use and manage the engine.
@@ -116,6 +114,22 @@ Express：Engine + Service；P2P、Cloud (serverless)、App Hub、AI Coding
 集群（Redis Queue）、定时（Quartz）、V8引擎（ThreadLocal）、数据采集与统计（Context）、内嵌Tomcat、路由、动态加载Jar/JS/Node、BaseApp
 
 Service console UI and API: 集群、应用（数据表）、集成流程（流程设置及配置）、实例（搜索）
+
+Get Started
+Publish jars, Install, Run, Sample Application and integration (load and run)
+
+Management
+API Doc
+https://www.apifox.cn/apidoc/shared-384b25d2-03e3-4e8a-a664-5d66db922a89
+
+Programming
+Engine API (Java, JavaScript), Develope Application (HttpBaseApplication), Integration
+https://www.yuque.com/yiting-eh5ph/thfyr2/kssuo7 Java、JavaScript
+聚变应用必须实现 Application 接口
+本文档只介绍如何开发和测试 HTTP 应用，即应用系统中的所有服务接口均采用 HTTP/1.1 协议。
+
+Application Use cases:
+XCharge
 
 To Do
 Service Web console UI
@@ -131,21 +145,5 @@ Express engine: private and trust.
 Dev engine: sandbox for develop application and processor.
 Other to does: Data schema and remove serialization for each step; New JS engine; Polyglot support.
 支持http之外的协议、多语言支持、SDK无API自主接入
-
-Application Use cases:
-XCharge
-
-Programming
-Engine API (Java, JavaScript), Develope Application (HttpBaseApplication), Integration
-https://www.yuque.com/yiting-eh5ph/thfyr2/kssuo7 Java、JavaScript
-聚变应用必须实现 Application 接口
-本文档只介绍如何开发和测试 HTTP 应用，即应用系统中的所有服务接口均采用 HTTP/1.1 协议。
-
-Management
-API Doc
-https://www.apifox.cn/apidoc/shared-384b25d2-03e3-4e8a-a664-5d66db922a89
-
-Get Started
-Publish jars, Install, Run, Sample Application and integration (load and run)
 
 -->
