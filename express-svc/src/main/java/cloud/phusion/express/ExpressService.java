@@ -1,6 +1,7 @@
 package cloud.phusion.express;
 
 import cloud.phusion.Context;
+import cloud.phusion.DataObject;
 import cloud.phusion.Engine;
 import cloud.phusion.EngineFactory;
 import cloud.phusion.express.controller.*;
@@ -8,6 +9,7 @@ import cloud.phusion.express.integration.IntegrationImpl;
 import cloud.phusion.express.service.*;
 import cloud.phusion.express.util.ErrorResponse;
 import cloud.phusion.express.util.ServiceLogger;
+import cloud.phusion.protocol.http.HttpMethod;
 import cloud.phusion.protocol.http.HttpRequest;
 import cloud.phusion.protocol.http.HttpResponse;
 import cloud.phusion.protocol.http.HttpServer;
@@ -24,6 +26,7 @@ public class ExpressService implements HttpServer {
     public static final String PROP_FILE = "application.properties";
 
     private static final String _position = ExpressService.class.getName();
+    private static String _corsOrigin = null;
 
     public static void main(String[] args) throws Exception {
         Engine engine;
@@ -64,6 +67,14 @@ public class ExpressService implements HttpServer {
 
     @Override
     public void handle(HttpRequest req, HttpResponse resp, Context ctx) throws Exception {
+        if (req.getMethod().equals(HttpMethod.OPTIONS)) {
+            // For CORS preflight request
+            resp.setStatusCode(200);
+            resp.setBody(new DataObject(""));
+            _setCORSHeaders(resp);
+            return;
+        }
+
         String category = req.getParameter("_category");
 
         try {
@@ -123,6 +134,17 @@ public class ExpressService implements HttpServer {
 
         if (! resp.getHeaders().containsKey("Content-Type"))
             resp.setHeader("Content-Type", "application/json; charset=UTF-8");
+
+        _setCORSHeaders(resp);
+    }
+
+    private static void _setCORSHeaders(HttpResponse resp) {
+        if (_corsOrigin == null) return;
+
+        resp.setHeader("Access-Control-Allow-Origin", _corsOrigin);
+        resp.setHeader("Access-Control-Allow-Methods", "*");
+        resp.setHeader("Access-Control-Allow-Headers", "*");
+        resp.setHeader("Access-Control-Max-Age", "3600");
     }
 
     private static Properties _loadProperties(String[] args) throws Exception {
@@ -171,6 +193,10 @@ public class ExpressService implements HttpServer {
         clonedProps.setProperty(UserService.SECRET_KEY, "******");
         clonedProps.setProperty(EngineFactory.JDBC_Password, "******");
         clonedProps.setProperty(EngineFactory.Redis_Auth, "******");
+
+        // Get CORS Origin
+        String origin = props.getProperty("http.server.corsOrigin");
+        if (origin!=null && origin.length()>0) _corsOrigin = origin;
 
         ServiceLogger.info(_position, "Engine and Service configuration: "+clonedProps.toString());
 
